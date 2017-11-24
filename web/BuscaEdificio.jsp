@@ -4,6 +4,9 @@
     Author     : papalominos
 --%>
 
+<%@page import="Modelo.Usuario"%>
+<%@page import="Servlet.ServletUsuario"%>
+<%@page import="Servlet.ServletUsuario"%>
 <%@page import="Controlador.ControlEdificio"%>
 <%@page import="Modelo.Edificio"%>
 <%@page import="Modelo.Comuna"%>
@@ -25,9 +28,37 @@ String control = "display:none";
     <body>
         
          <div class="container-fluid">
+             <nav class="navbar navbar-toggleable-md navbar-light bg-faded navbar-inverse bg-primary">
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                    <%
+                        if(session.getAttribute(ServletUsuario.USUARIO_ACTUAL) != null) {
+                            Usuario actual = (Usuario) session.getAttribute(ServletUsuario.USUARIO_ACTUAL);
+                    %>
+                    <div style="position: absolute; right: 20px " >
+                        <a class="navbar-brand" href="usuario?action=logout">Adios <%=actual.getN_usuario()%> (Cerrar)</a>
+                    </div>   
+                    <a class="navbar-brand" href="#">Bienvenido <%=actual.getN_usuario()%> </a>
+                    <%
+                        } else {
+                    %>  
+                        <script>location.href="usuario?action=logout";</script>
+                    <%        
+                        }
+                    %>
+                
+                
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                  <div class="navbar-nav">
+                    
+               
+                  </div>
+                </div>
+              </nav>
             <div style="background-image: url(img/banner.jpg); background-position: right; background-size: 100%; " class="jumbotron text-center">
-                <h4 class="display-4" >Inmobiliaria <br> Adeudadito mas Feliz</h4>
-            <h5 class="lead">El lugar donde su sueño se hace <h5 style="color: red">Realidad</h5></h5>
+                <h4 class="display-4" style="color: white" >Inmobiliaria <br> Adeudadito mas Feliz</h4>
+            <h5 style="color: white" class="lead">El lugar donde su sueño se hace <h5 style="color: white">Realidad</h5></h5>
             </div>
         </div>
         
@@ -47,6 +78,7 @@ String control = "display:none";
                                 </select>
                     </td>
                     <td><input type="submit" name="btn_buscar" value="Buscar"  class="btn btn-success" </td>
+                    <td><input type="submit" name="btn_volver" value="Volver" class="btn btn-danger"</td>
                 </tr>
             </table>
         </form>

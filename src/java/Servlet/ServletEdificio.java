@@ -130,7 +130,7 @@ public class ServletEdificio extends HttpServlet {
             {
                 Edificio edi_nuevo = new Edificio();
                 String codigo = request.getParameter("codigo");
-                String nombre = request.getParameter("nombre");
+                String nombre = request.getParameter("nombre_n");
                 String direccion = request.getParameter("direccion");
                 String permiso = request.getParameter("permiso");
                 int p = Integer.parseInt(permiso);
@@ -144,8 +144,11 @@ public class ServletEdificio extends HttpServlet {
                 
                 ControlEdificio edit = new ControlEdificio();
                 edit.modEdificio(edi_nuevo, edi_ori);
+                 int com = (Integer) sesion.getAttribute("com");
+                ControlEdificio ce = new ControlEdificio(); 
+                sesion.setAttribute("lista_edi", ce.ListarEdificios(com)); 
                 
-                dispatcher = request.getRequestDispatcher("/AdminCentral.jsp");
+                dispatcher = request.getRequestDispatcher("/BuscaEdificio.jsp");
                 dispatcher.forward(request, response);
                 
             

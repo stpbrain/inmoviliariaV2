@@ -17,13 +17,6 @@
     </head>
     <body>
         <div class="container-fluid">
-            <div style="background-image: url(img/banner.jpg); background-position: right; background-size: 100%; " class="jumbotron text-center">
-              <h4 class="display-4">Inmobiliaria <br> Adeudadito mas Feliz</h4>
-            <h5 class="lead">El lugar donde su sueño se hace <h5 style="color: white">Realidad</h5></h5>
-        </div>
-        </div>
-        <div class="container">
-            
             <nav class="navbar navbar-toggleable-md navbar-light bg-faded navbar-inverse bg-primary">
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon"></span>
@@ -32,7 +25,10 @@
                         if(session.getAttribute(ServletUsuario.USUARIO_ACTUAL) != null) {
                             Usuario actual = (Usuario) session.getAttribute(ServletUsuario.USUARIO_ACTUAL);
                     %>
-                        <a class="navbar-brand" href="usuario?action=logout"><%=actual.getN_usuario()%> (Cerrar)</a>
+                    <div style="position: absolute; right: 20px " >
+                        <a class="navbar-brand" href="usuario?action=logout">Adios <%=actual.getN_usuario()%> (Cerrar)</a>
+                    </div>   
+                    <a class="navbar-brand" href="#">Bienvenido <%=actual.getN_usuario()%> </a>
                     <%
                         } else {
                     %>  
@@ -41,14 +37,22 @@
                         }
                     %>
                 
-                <a class="navbar-brand" href="#">Navbar</a>
+                
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                   <div class="navbar-nav">
-                    <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+                    
                
                   </div>
                 </div>
               </nav>
+            <div style="background-image: url(img/banner.jpg); background-position: right; background-size: 100%; " class="jumbotron text-center">
+              <h4 style="color: white" class="display-4">Inmobiliaria <br> Adeudadito mas Feliz</h4>
+            <h5 class="lead" style="color: white">El lugar donde su sueño se hace <h5 style="color: white">Realidad</h5></h5>
+        </div>
+        </div>
+        <div class="container">
+            
+            
             <form action="./ServletPrincipal" name="fom1" method="POST">
             <table class="table text-center">
                 <tr>

@@ -27,7 +27,7 @@
         </div>
         </div>
         
-        <div class="container text-center">
+        <div class="container text-center row">
             <table class="table-active text-center ">
                 <tr>
                     <th>RUT</th>
