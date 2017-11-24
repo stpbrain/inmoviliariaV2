@@ -23,12 +23,12 @@
         <div class="container-fluid">
             <div style="background-image: url(img/banner.jpg); background-position: right; background-size: 100%; " class="jumbotron text-center">
                 <h4 class="display-4" >Inmobiliaria <br> Adeudadito mas Feliz</h4>
-            <h5 class="lead">El lugar donde su sueño se hace <h5 style="color: red">Realidad</h5></h5>
+            <h5 class="lead">El lugar donde su sueño se hace <h5 style="color: white">Realidad</h5></h5>
         </div>
         </div>
         
-        <div class="container text-center row">
-            <table class="table-active text-center ">
+        <div class="container  ">
+            <table class=" table table-bordered table-hover">
                 <tr>
                     <th>RUT</th>
                     <th>Usuarios</th>
@@ -39,12 +39,15 @@
                     <td><%= e.getN_usuario() %> </td>
                 </tr>
                   <%}}else {%> <%}%>
-                  <tr>
-                  <form action="./ServletEdificio" method="POST" name="fr" >
-                      <td><input type="submit" name="btn_volver" value="Volver" class="btn btn-danger"</td>
-                  </form>
-                  </tr>
+                  <tr  >
+                 
+                
             </table>
+                  <div class="text-center">
+                   <form action="./ServletEdificio" method="POST" name="fr" >
+                      <input type="submit" name="btn_volver" value="Volver" class="btn btn-danger ">
+                  </form>
+                      </div>
             
         </div>
     </body>

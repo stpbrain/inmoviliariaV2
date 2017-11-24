@@ -25,7 +25,7 @@ Edificio edi = (Edificio) sesion.getAttribute("mod_edi_ori");
          <div class="container-fluid">
             <div style="background-image: url(img/banner.jpg); background-position: right; background-size: 100%; " class="jumbotron text-center">
                 <h4 class="display-4" >Inmobiliaria <br> Adeudadito mas Feliz</h4>
-                <h5 class="lead">El lugar donde su sueño se hace <h5 style="color: red">Realidad</h5></h5>
+                <h5 class="lead">El lugar donde su sueño se hace <h5 style="color: white">Realidad</h5></h5>
             </div>
         </div>
         
