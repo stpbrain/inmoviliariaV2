@@ -19,6 +19,27 @@ import java.util.List;
  *  Author     : Kathy
  */
 public class ControlArrendatario {
+
+    public static boolean editarResidente(Integer idDpto, String residente) {
+
+        try {
+            Conexion conn = new Conexion();
+            Connection conexion = conn.getConnection("inmobiliaria");
+            Statement stms = conexion.createStatement();
+            
+            String consulta = "UPDATE tb_departamento SET RESIDENTE = UPPER('" + residente + "') WHERE ID_DEPARTAMENTO = " + idDpto;
+            
+            System.out.println("Fue agregado: "+consulta);
+            
+            stms.executeUpdate(consulta);           
+            
+            
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
      public boolean permisoMunicipal(String numEdificio){
         try {
             Conexion conn = new Conexion();
@@ -67,7 +88,7 @@ public class ControlArrendatario {
         }
     }
     
-    public ArrayList ListarEdificios(int idDpto)
+    public ArrayList ListarDepartamentos(String idEdificio)
     {
         ArrayList<Departamento> listaDepto = new ArrayList<Departamento>();
         try {
@@ -76,7 +97,9 @@ public class ControlArrendatario {
             Statement stms = conexion.createStatement();
             
             
-            String listar = "SELECT id_departamento, id_edificio, numero, residente, FROM tb_departamento WHERE id_departamento = "+ idDpto +"; ";
+            String listar = "SELECT id_departamento, id_edificio, numero, residente FROM tb_departamento WHERE id_EDIFICIO = '"+ idEdificio +"'";
+            
+            System.out.println(listar);
             
              ResultSet rs = stms.executeQuery(listar);
              
@@ -94,7 +117,7 @@ public class ControlArrendatario {
              return listaDepto;
             
         } catch (Exception e) {
-            e.getStackTrace();
+            e.printStackTrace();
             return listaDepto;
         }
     }
@@ -106,15 +129,16 @@ public class ControlArrendatario {
             Connection conexion = conn.getConnection("inmobiliaria");
             Statement stms = conexion.createStatement();
             
-            String consulta = "INSERT INTO tb_departamento VALUES ('"+ dpto.getId_departamento() +"','" + dpto.getId_edificio() +"','" + dpto.getNumero_d() +"'," + dpto.getResidente() + ");";
-            
-            stms.executeUpdate(consulta);           
+            String consulta = "INSERT INTO tb_departamento (ID_EDIFICIO, NUMERO, RESIDENTE) VALUES (UPPER('" + dpto.getId_edificio() +"')," + dpto.getNumero_d() +", UPPER('" + dpto.getResidente() +"'))";
             
             System.out.println("Fue agregado: "+consulta);
             
+            stms.executeUpdate(consulta);           
+            
+            
             return true;
         } catch (Exception e) {
-            e.getStackTrace();
+            e.printStackTrace();
             return false;
         }
     }
@@ -201,6 +225,10 @@ public class ControlArrendatario {
             e.getStackTrace();
         }
         return null;
+    }
+
+    public Object ListarEdificios(int idCondominio) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

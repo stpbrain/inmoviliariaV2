@@ -77,7 +77,7 @@ String control = "display:none";
                                     
                                 </select>
                     </td>
-                    <td><input type="submit" name="btn_buscar" value="Buscar"  class="btn btn-success" </td>
+                    <td><input type="submit" name="btn_buscarA" value="Buscar"  class="btn btn-success" </td>
                     <td><input type="submit" name="btn_volver" value="Volver" class="btn btn-danger"</td>
                 </tr>
             </table>

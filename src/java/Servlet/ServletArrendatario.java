@@ -8,6 +8,8 @@ package Servlet;
 
 import Controlador.ControlArrendatario;
 import Modelo.Departamento;
+import static Servlet.ServletEdificio.LISTA_DEPARTAMENTOS;
+import static Servlet.ServletUsuario.MENSAJE;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -34,7 +36,7 @@ public class ServletArrendatario extends HttpServlet {
             String btnIngresar = request.getParameter("btn_guardar");
             String btnBuscar = request.getParameter("btn_buscar"); //falta crear el botón buscar
             String btnVolver = request.getParameter("btn_volver");
-            String btnModificar = request.getParameter("btn_modificar");
+            String btnModificar = request.getParameter("btn_editar");
             
             HttpSession sesion = request.getSession();
             RequestDispatcher dispatcher;
@@ -42,7 +44,7 @@ public class ServletArrendatario extends HttpServlet {
             if (btnIngresar != null){
                 String idEdificio = request.getParameter("id_edificio");
                 //falta el idDepartamento que es autoincrementable (?)
-                int numDepto = Integer.parseInt("num_depto");
+                int numDepto = Integer.parseInt(request.getParameter("num_dpto"));
                 String residente = request.getParameter("txtResidente");
                 
                 ControlArrendatario ctrlArrendatario = new ControlArrendatario();
@@ -53,9 +55,13 @@ public class ServletArrendatario extends HttpServlet {
                 dpto.setResidente(residente);
                 
                 
-                ctrlArrendatario.GuardarDpto(dpto);
+                if(ctrlArrendatario.GuardarDpto(dpto)) {
+                    sesion.setAttribute(MENSAJE, "Departamento Creado");
+                } else {
+                    sesion.setAttribute(MENSAJE, "No se logra crear Departamento");
+                }
                 
-                dispatcher = request.getRequestDispatcher("/AdminCentral.jsp");
+                dispatcher = request.getRequestDispatcher("/NuevoArrendatario.jsp");
                 dispatcher.forward(request, response);
 
             }
@@ -66,7 +72,7 @@ public class ServletArrendatario extends HttpServlet {
                 int idCondominio  = Integer.parseInt(condominio);
                 sesion.setAttribute("condominio", idCondominio);
                 ControlArrendatario ctrlArrendatario = new ControlArrendatario(); 
-                sesion.setAttribute("listaDpto", ctrlArrendatario.ListarEdificios(idCondominio));  
+                sesion.setAttribute("listaDpto", ctrlArrendatario.ListarDepartamentos(condominio));  
                 dispatcher = request.getRequestDispatcher("/NuevoArrendatario.jsp"); //cambiar
                 dispatcher.forward(request, response);
                 
@@ -81,15 +87,64 @@ public class ServletArrendatario extends HttpServlet {
             
             if (btnModificar != null){
 
-             String residente = request.getParameter("residente");
+                System.out.println("EDITAAAAAA");
+                Integer idDpto = Integer.parseInt(request.getParameter("idDepartamento"));
+                String residente = request.getParameter("residente");
              
-             Departamento nuevoDepto = new Departamento();
-             nuevoDepto.setResidente(residente);
-
-             sesion.setAttribute("modifica", nuevoDepto);
-             dispatcher = request.getRequestDispatcher("/NuevoArrendatario.jsp");
+                ControlArrendatario ctrlArrendatario = new ControlArrendatario(); 
+                if(ControlArrendatario.editarResidente(idDpto, residente)) {
+                
+                    sesion.setAttribute(MENSAJE, "Residente actualizado");
+                    sesion.setAttribute(ServletPrincipal.LISTA_EDIFICIOS, ctrlArrendatario.ObtenerIdEdificio());
+                    sesion.setAttribute(LISTA_DEPARTAMENTOS, null);
+                    
+                } else {
+                    sesion.setAttribute(MENSAJE, "No se logra editar residente");
+                }
+             
+             dispatcher = request.getRequestDispatcher("/BuscarDepartamento.jsp");
              dispatcher.forward(request, response);
             }
         }
-    }           
+    }  
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+    
 }

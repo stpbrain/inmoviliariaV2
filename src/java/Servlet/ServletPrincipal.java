@@ -25,6 +25,8 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "ServletPrincipal", urlPatterns = {"/ServletPrincipal"})
 public class ServletPrincipal extends HttpServlet {
 
+    public static final String LISTA_EDIFICIOS = "listaEdificios";
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -72,8 +74,9 @@ public class ServletPrincipal extends HttpServlet {
             
             if (btn_buscar_depto != null){
                 
-                //ControlArrendatario ctrl = new ControlArrendatario();
-                //sesion.setAttribute("id_edificio", ctrl.ObtenerDepartamentos());    
+                ControlEdificio ctrl = new ControlEdificio();
+                ControlArrendatario ctrl2 = new ControlArrendatario();
+                sesion.setAttribute(LISTA_EDIFICIOS, ctrl2.ObtenerIdEdificio());    
                 dispatcher = request.getRequestDispatcher("/BuscarDepartamento.jsp");
                 dispatcher.forward(request, response);
             }

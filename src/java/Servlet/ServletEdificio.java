@@ -5,6 +5,7 @@
  */
 package Servlet;
 
+import Controlador.ControlArrendatario;
 import Controlador.ControlEdificio;
 import Modelo.Edificio;
 import java.io.IOException;
@@ -25,6 +26,8 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "ServletEdificio", urlPatterns = {"/ServletEdificio"})
 public class ServletEdificio extends HttpServlet {
 
+    public static final String LISTA_DEPARTAMENTOS = "listaDepartamentos";
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -45,6 +48,7 @@ public class ServletEdificio extends HttpServlet {
             
             
             String btn_guardar = request.getParameter("btn_guardar");
+            String btn_buscarA = request.getParameter("btn_buscarA");
             String btn_buscar = request.getParameter("btn_buscar");
             String btn_habilitar = request.getParameter("btn_habilitar");
             String btn_volver = request.getParameter("btn_volver");
@@ -78,12 +82,11 @@ public class ServletEdificio extends HttpServlet {
             }
             if(btn_buscar != null)
             {
-                String cod = request.getParameter("comuna");
-                int c  = Integer.parseInt(cod);
-                sesion.setAttribute("com", c);
-                ControlEdificio ce = new ControlEdificio(); 
-                sesion.setAttribute("lista_edi", ce.ListarEdificios(c));  
-                dispatcher = request.getRequestDispatcher("/BuscaEdificio.jsp");
+                String cod = request.getParameter("id_edificio");
+                System.out.println("id_edificio = "+ cod);
+                ControlArrendatario ce = new ControlArrendatario(); 
+                sesion.setAttribute(LISTA_DEPARTAMENTOS, ce.ListarDepartamentos(cod));  
+                dispatcher = request.getRequestDispatcher("/BuscarDepartamento.jsp");
                 dispatcher.forward(request, response);
                 
             }
@@ -153,6 +156,17 @@ public class ServletEdificio extends HttpServlet {
                 
             
             }
+            
+            if(btn_buscarA != null)
+                    {
+                         String cod = request.getParameter("comuna");
+                int c  = Integer.parseInt(cod);
+                sesion.setAttribute("com", c);
+                ControlEdificio ce = new ControlEdificio(); 
+                sesion.setAttribute("lista_edi", ce.ListarEdificios(c));  
+                dispatcher = request.getRequestDispatcher("/BuscaEdificio.jsp");
+                dispatcher.forward(request, response);
+                    }
         }
     }
 
